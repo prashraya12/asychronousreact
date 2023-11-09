@@ -1,24 +1,40 @@
-import logo from './logo.svg';
+// #fetching data with Hooks
 import './App.css';
+import { useEffect , useState } from 'react';
+function GitHubUser(name,location,avatar){
+  return (
+
+      <div>
+        <h1>{name}</h1>
+        <p>{location}</p>
+        <img src={avatar} height={150} alt={name}/>
+      </div>
+  )
+
+
+}
+
+
 
 function App() {
+
+const [data, setData] = useState(null);
+
+useEffect(()=>{
+
+const data = fetch("https://api.github.com/users/defunkt").then((response) => response.json())
+.then(setData);
+
+
+}, []);
+
+if(data){
+
+  return <pre>{JSON.stringify(data, null, 2)}</pre>
+}
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <h1>Data</h1>
   );
 }
 
